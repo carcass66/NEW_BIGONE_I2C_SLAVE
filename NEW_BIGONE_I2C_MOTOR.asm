@@ -276,14 +276,32 @@ TWI_Init:		LDI temp, 0b01000101
 FWARD:			CLI							;Disable interrupts(global)
 				;Set side of rotation of MOTORSC
 				;Set PWM date from mainVar
+				SETB DDRB,0					;Set PB0 as output
+				SETB DDRB,2					;Set PB2 as output
+				SETB DDRB,3					;Set PB3 as output
+				SETB PORTB,0				;PB0 is HIGH
+				CLRB PORTB,2				;PB2 is LOW
+				CLRB PORTB,3				;PB3 is LOW
 				RJMP IDLE					;Go to IDLE
 BACKWARD:		CLI							;Disable interrupts(global)
 				;Set side of rotation of MOTORS
 				;Set PWM date from mainVar
+				SETB DDRB,0					;Set PB0 as output
+				SETB DDRB,2					;Set PB2 as output
+				SETB DDRB,3					;Set PB3 as output
+				CLRB PORTB,0				;PB0 is LOW
+				SETB PORTB,2				;PB2 is HIGH
+				CLRB PORTB,3				;PB3 is LOW
 				RJMP IDLE					;Go to IDLE
 LEFT:			CLI							;Disable interrupts(global)
 				;Set side of rotation of right MOTORS
 				;Set PWM date from mainVar
+				SETB DDRB,0					;Set PB0 as output
+				SETB DDRB,2					;Set PB2 as output
+				SETB DDRB,3					;Set PB3 as output
+				CLRB PORTB,0				;PB0 is LOW
+				CLRB PORTB,2				;PB2 is LOW
+				SETB PORTB,3				;PB3 is HIGH
 				RJMP IDLE					;Go to IDLE
 RIGHT:			CLI							;Disable interrupts(global)
 				;Set side of rotation of left MOTORS
