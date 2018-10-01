@@ -1,0 +1,2 @@
+@ECHO OFF
+"C:\AVR\AvrAssembler2\avrasm2.exe" -S "C:\Users\Ivanov.AA6\Documents\NEW_BIGONE_I2C_MOTOR\labels.tmp" -fI -W+ie -I "C:\AVR\AvrAssembler2\Appnotes" -o "C:\Users\Ivanov.AA6\Documents\NEW_BIGONE_I2C_MOTOR\NEW_BIGONE_I2C_MOTOR.hex" -d "C:\Users\Ivanov.AA6\Documents\NEW_BIGONE_I2C_MOTOR\NEW_BIGONE_I2C_MOTOR.obj" -e "C:\Users\Ivanov.AA6\Documents\NEW_BIGONE_I2C_MOTOR\NEW_BIGONE_I2C_MOTOR.eep" -m "C:\Users\Ivanov.AA6\Documents\NEW_BIGONE_I2C_MOTOR\NEW_BIGONE_I2C_MOTOR.map" "C:\Users\Ivanov.AA6\Documents\NEW_BIGONE_I2C_MOTOR\NEW_BIGONE_I2C_MOTOR.asm"
