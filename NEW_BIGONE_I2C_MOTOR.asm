@@ -279,9 +279,11 @@ FWARD:			CLI							;Disable interrupts(global)
 				SETB DDRB,0					;Set PB0 as output
 				SETB DDRB,2					;Set PB2 as output
 				SETB DDRB,3					;Set PB3 as output
+				SETB DDRB,4					;Set PB4 as output
 				SETB PORTB,0				;PB0 is HIGH
 				CLRB PORTB,2				;PB2 is LOW
 				CLRB PORTB,3				;PB3 is LOW
+				CLRB PORTB,4				;PB4 is LOW
 				RJMP IDLE					;Go to IDLE
 BACKWARD:		CLI							;Disable interrupts(global)
 				;Set side of rotation of MOTORS
@@ -289,9 +291,11 @@ BACKWARD:		CLI							;Disable interrupts(global)
 				SETB DDRB,0					;Set PB0 as output
 				SETB DDRB,2					;Set PB2 as output
 				SETB DDRB,3					;Set PB3 as output
+				SETB DDRB,4					;Set PB4 as output
 				CLRB PORTB,0				;PB0 is LOW
 				SETB PORTB,2				;PB2 is HIGH
 				CLRB PORTB,3				;PB3 is LOW
+				CLRB PORTB,4				;PB4 is LOW
 				RJMP IDLE					;Go to IDLE
 LEFT:			CLI							;Disable interrupts(global)
 				;Set side of rotation of right MOTORS
@@ -299,30 +303,72 @@ LEFT:			CLI							;Disable interrupts(global)
 				SETB DDRB,0					;Set PB0 as output
 				SETB DDRB,2					;Set PB2 as output
 				SETB DDRB,3					;Set PB3 as output
+				SETB DDRB,4					;Set PB4 as output
 				CLRB PORTB,0				;PB0 is LOW
 				CLRB PORTB,2				;PB2 is LOW
 				SETB PORTB,3				;PB3 is HIGH
+				CLRB PORTB,4				;PB4 is LOW
 				RJMP IDLE					;Go to IDLE
 RIGHT:			CLI							;Disable interrupts(global)
 				;Set side of rotation of left MOTORS
 				;Set PWM date from mainVar
+				SETB DDRB,0					;Set PB0 as output
+				SETB DDRB,2					;Set PB2 as output
+				SETB DDRB,3					;Set PB3 as output
+				SETB DDRB,4					;Set PB4 as output
+				CLRB PORTB,0				;PB0 is LOW
+				CLRB PORTB,2				;PB2 is LOW
+				CLRB PORTB,3				;PB3 is LOW
+				SETB PORTB,4				;PB4 is HIGH
 				RJMP IDLE					;Go to IDLE
 
 FWARD_L:		CLI							;Disable interrupts(global)
 				;Set side of rotation of MOTORS
 				;Set PWM date from mainVar
+				SETB DDRB,0					;Set PB0 as output
+				SETB DDRB,2					;Set PB2 as output
+				SETB DDRB,3					;Set PB3 as output
+				SETB DDRB,4					;Set PB4 as output
+				SETB PORTB,0				;PB0 is HIGH
+				CLRB PORTB,2				;PB2 is LOW
+				SETB PORTB,3				;PB3 is HIGH
+				CLRB PORTB,4				;PB4 is LOW
 				RJMP IDLE					;Go to IDLE
 FWARD_R:		CLI							;Disable interrupts(global)
 				;Set side of rotation of MOTORS
 				;Set PWM date from mainVar
+				SETB DDRB,0					;Set PB0 as output
+				SETB DDRB,2					;Set PB2 as output
+				SETB DDRB,3					;Set PB3 as output
+				SETB DDRB,4					;Set PB4 as output
+				SETB PORTB,0				;PB0 is HIGH
+				CLRB PORTB,2				;PB2 is LOW
+				CLRB PORTB,3				;PB3 is LOW
+				SETB PORTB,4				;PB4 is HIGH
 				RJMP IDLE					;GO to IDLE
 BACKWARD_L:		CLI							;Disable interrupts(global)
 				;Set side of rotation of MOTORS
 				;Set PWM date from mainVar
+				SETB DDRB,0					;Set PB0 as output
+				SETB DDRB,2					;Set PB2 as output
+				SETB DDRB,3					;Set PB3 as output
+				SETB DDRB,4					;Set PB4 as output
+				CLRB PORTB,0				;PB0 is LOW
+				SETB PORTB,2				;PB2 is HIGH
+				SETB PORTB,3				;PB3 is HIGH
+				CLRB PORTB,4				;PB4 is LOW
 				RJMP IDLE					;Go to IDLE
 BACKWARD_R:		CLI							;Disable interrupts(global)
 				;Set side of rotation of MOTORS
 				;Set PWM date from mainVar
+				SETB DDRB,0					;Set PB0 as output
+				SETB DDRB,2					;Set PB2 as output
+				SETB DDRB,3					;Set PB3 as output
+				SETB DDRB,4					;Set PB4 as output
+				CLRB PORTB,0				;PB0 is LOW
+				SETB PORTB,2				;PB2 is HIGH
+				CLRB PORTB,3				;PB3 is LOW
+				SETB PORTB,4				;PB4 is HIGH
 				RJMP IDLE					;Go to IDLE
 
 ; EEPROM ===============================================
