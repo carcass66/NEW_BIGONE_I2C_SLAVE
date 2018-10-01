@@ -148,6 +148,14 @@ STOP:			CLI						;Disable interrupts
 				;STOP ALL MOTORS
 
 				;==========================================
+				SETB DDRB,0					;Set PB0 as output
+				SETB DDRB,2					;Set PB2 as output
+				SETB DDRB,3					;Set PB3 as output
+				SETB DDRB,4					;Set PB4 as output
+				CLRB PORTB,0				;PB0 is LOW
+				CLRB PORTB,2				;PB2 is LOW
+				CLRB PORTB,3				;PB3 is LOW
+				CLRB PORTB,4				;PB4 is LOW
 				RJMP IDLE				;Return to loop
 ;=====================================================================================================
 INT_I2C:		LDS temp, TWSR			;Check and clean(cut two low bits) the status register
