@@ -4,6 +4,8 @@
 				.def del2=R18			
 				.def del3=R19
 				.def sys=R20
+				.def end=R21
+				.def err=R22
 ;======================================== Start macro.inc==========================
 
 				.macro    OUTI                          
@@ -203,6 +205,7 @@ LAST_BYTE:		LDS temp, TWDR
 				ST -Y, temp
 				LDI temp, 0b10001000		;RECHECK!!!!!!!
 				STS TWCR, temp
+				LDI end, 0x05
 				RJMP Vix
 SLA_R:			NOP
 				RJMP Vix
@@ -213,6 +216,7 @@ S_LBYTE_R_NACK:	NOP
 S_LBYTE_R_ACK:	NOP
 				RJMP Vix
 Vix:			SEI
+				inc err
 				RETI				
 ;======================================================================================================				
 IDLE:			CLI
@@ -230,19 +234,11 @@ IDLE:			CLI
 				LDI sys,0
 				RCALL TWI_Init				;Enable I2C interrupts
 				SEI							;Enable interrupts(global)
-DELAY:			LDI del1, 0xFF				;Delay
-				LDI del2, 0xFF
-				LDI del3, 0xFF
-DELAY1:			dec del1
-				CPI del1, 0x00
-				BRNE DELAY1
-DELAY2:			dec del2
-				CPI del2, 0x00
-				BRNE DELAY2
-DELAY3:			dec del3
-				CPI del3, 0x00
-				BRNE DELAY3
-				CLI							;Disable interrupts(global)
+DELAY:			CPI end, 0x05				;Delay
+				BREQ DELAY_EXIT
+				CPI err, 0x0B
+				BRCS DELAY
+DELAY_EXIT:		CLI							;Disable interrupts(global)
 				LDI YH, high(mainVar)		;Load mamory address of mainVar to Y registers
 				LDI YL, low(mainVar)		;Disable interrupts (global)
 				LD temp, Y+					;Check command(high bit of mainVar)
@@ -264,7 +260,7 @@ DELAY3:			dec del3
 				BREQ BACKWARD_L_T			;Go to BACKWARD_L
 				CPI temp, 0b00001001		;If comand is '00001001'
 				BREQ BACKWARD_R_T			;Go to BACKWARD_R
-				RJMP IDLE
+				RJMP STOP
 
 FWARD_T:		RJMP FWARD
 BACKWARD_T:		RJMP BACKWARD
@@ -279,6 +275,8 @@ BACKWARD_R_T:	RJMP BACKWARD_R
 
 TWI_Init:		LDI temp, 0b01000101
 				STS TWCR, temp
+				LDI err, 0x00
+				LDI end, 0x02
 				RET
 ;====================================================================================
 FWARD:			CLI							;Disable interrupts(global)
