@@ -135,11 +135,51 @@ encoderVar:		.byte	8				;set variable for encoders counts
 				RETI
 				.ORG INT_VECTORS_SIZE
 ;====================================================================================
-RESET:			LDI temp, Low(RAMEND)
+RESET:			NOP
+RAM_FLUSH:		LDI ZL, Low(SRAM_START)	;Clean RAM and all registers
+				LDI ZH, High(SRAM_START)
+				CLR temp
+FLUSH:			ST Z+, temp
+				CPI ZH, High(RAMEND+1)
+				BRNE FLUSH
+				CPI Zl, Low(RAMEND+1)
+				BRNE FLUSH
+				CLR ZL
+				CLR ZH
+				CLR R0
+				CLR R1
+				CLR R2
+				CLR R3
+				CLR R4
+				CLR R5
+				CLR R6
+				CLR R7
+				CLR R8
+				CLR R9
+				CLR R10
+				CLR R11
+				CLR R12
+				CLR R13
+				CLR R14
+				CLR R15
+				CLR R16
+				CLR R17
+				CLR R18
+				CLR R19
+				CLR R20
+				CLR R21
+				CLR R22
+				CLR R23
+				CLR R24
+				CLR R25
+				CLR R26
+				CLR R27
+				CLR R28
+				CLR R29	
+				LDI temp, Low(RAMEND)	;Stack init
 				OUT SPL, temp
 				LDI temp, High(RAMEND)        
 				OUT SPH, temp
-				;NEED TO CLEAN ALL REGISTERS AND RAM
 				LDI temp, 0x32			;Set I2C slave address
 				STS TWAR, temp
 
@@ -158,7 +198,11 @@ STOP:			CLI						;Disable interrupts
 				CLRB PORTB,4				;PB4 is LOW
 				RJMP IDLE				;Return to loop
 ;=====================================================================================================
-INT_I2C:		LDS temp, TWSR			;Check and clean(cut two low bits) the status register
+INT_I2C:		CLI						;Disable interupts (global)
+				PUSH temp				;Save temp to stack
+				IN temp, SREG
+				PUSH temp				;Save SREG to stack 
+				LDS temp, TWSR			;Check and clean(cut two low bits) the status register
 				ANDI temp, 0xF8			;
 				CPI temp, 0x60			;If receive our address to write(we need to receive data from master)
 				BREQ SLA_W				;Go to SLA_W lable
@@ -212,7 +256,10 @@ S_LBYTE_R_NACK:	NOP
 				RJMP Vix
 S_LBYTE_R_ACK:	NOP
 				RJMP Vix
-Vix:			SEI
+Vix:			POP temp					
+				OUT SREG, temp				;Load SREG from stack
+				POP temp					;Load temp from stack
+				SEI							;Enable interupts (global)
 				RETI				
 ;======================================================================================================				
 IDLE:			CLI
